@@ -30,6 +30,7 @@ import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.connect.listener.BluetoothStateListener;
 import com.inuker.bluetooth.library.connect.options.BleConnectOptions;
 import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
+import com.inuker.bluetooth.library.connect.response.BleReadResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.inuker.bluetooth.library.model.BleGattService;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothDeviceAd
     private FloatingActionButton fabUnlock;
     private FloatingActionButton fabSearch;
     private FloatingActionButton fabCommunicate;
+    private FloatingActionButton fabRead;
 
 
     @Override
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothDeviceAd
         fabUnlock = (FloatingActionButton) findViewById(R.id.unlock);
         fabSearch = (FloatingActionButton) findViewById(R.id.search);
         fabCommunicate = (FloatingActionButton) findViewById(R.id.communicate);
+        fabRead = (FloatingActionButton) findViewById(R.id.read_msg);
 
         mSwitch.setChecked(mClient.isBluetoothOpened());
 
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements BluetoothDeviceAd
         fabUnlock.setOnClickListener(this);
         fabSearch.setOnClickListener(this);
         fabCommunicate.setOnClickListener(this);
+        fabRead.setOnClickListener(this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -158,6 +162,9 @@ public class MainActivity extends AppCompatActivity implements BluetoothDeviceAd
                 break;
             case R.id.communicate:
                 doComumunicate();
+                break;
+            case R.id.read_msg:
+                doRead();
                 break;
         }
     }
@@ -240,6 +247,36 @@ public class MainActivity extends AppCompatActivity implements BluetoothDeviceAd
                                         ToastUtil.showMessage("发送指令成功");
                                     } else {
                                         ToastUtil.showMessage("发送指令失败");
+                                    }
+                                }
+                            });
+                        }
+                    }).show();
+        } else {
+            ToastUtil.showMessage("未连接蓝牙");
+        }
+    }
+
+    private void doRead() {
+        if (mClient.isConnect()) {
+            String mac = mClient.getConnectMac();
+            List<BleGattService> services = mClient.getBleGattProfile().getServices();
+            BleGattService service = services.get(services.size() - 1);
+            UUID seviceUuid = service.getUUID();
+            UUID cUuid = service.getCharacters().get(0).getUuid();
+
+            final TextView readText = new TextView(this);
+            AlertDialog readDialog = new AlertDialog.Builder(this)
+                    .setTitle("请输入要发送的消息")
+                    .setView(readText)
+                    .setPositiveButton("读", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mClient.read(mac, seviceUuid, cUuid, new BleReadResponse() {
+                                @Override
+                                public void onResponse(int code, byte[] data) {
+                                    if (code == Constants.REQUEST_SUCCESS) {
+                                        readText.setText(data.toString());
                                     }
                                 }
                             });

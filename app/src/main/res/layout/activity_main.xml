@@ -57,29 +57,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:padding="30dp"
-        app:menu_colorNormal="@color/colorSecondary">
+        app:menu_colorNormal="@color/colorSecondary"
+        app:menu_colorPressed="@color/colorSecondaryVariant">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/unlock"
             app:fab_label="解锁"
-            android:src="@drawable/ic_unlock"
+            android:src="@drawable/icon_padlock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_size="mini" />
+            app:fab_size="mini"
+            app:fab_colorNormal="@color/colorSecondary"
+            app:fab_colorPressed="@color/colorSecondaryVariant" />
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/search"
             app:fab_label="搜索"
-            android:src="@drawable/search"
+            android:src="@drawable/icon_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_size="mini" />
+            app:fab_size="mini"
+            app:fab_colorNormal="@color/colorSecondary"
+            app:fab_colorPressed="@color/colorSecondaryVariant"/>
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/communicate"
-            android:src="@drawable/ic_comment"
+            android:src="@drawable/icon_speech_bubble"
             app:fab_label="通信"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_size="mini" />
+            app:fab_size="mini"
+            app:fab_colorNormal="@color/colorSecondary"
+            app:fab_colorPressed="@color/colorSecondaryVariant"/>
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/read_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_news"
+            app:fab_size="mini"
+            app:fab_label="讯息"
+            app:fab_colorNormal="@color/colorSecondary"
+            app:fab_colorPressed="@color/colorSecondaryVariant" />
     </com.github.clans.fab.FloatingActionMenu>
 
 

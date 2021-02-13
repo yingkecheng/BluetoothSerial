@@ -10,7 +10,7 @@
     <color name="colorPrimary">#1976d2</color>
     <color name="colorPrimaryVariant">#004ba0</color>
     <color name="coloronPrimary">@color/white</color>
-    <color name="colorSecondary">#5c6bc0</color>
-    <color name="colorSecondaryVariant">#26418f</color>
+    <color name="colorSecondary">#80cbc4</color>
+    <color name="colorSecondaryVariant">#4f9a94</color>
     <color name="coloronSecondary">@color/white</color>
 </resources>
